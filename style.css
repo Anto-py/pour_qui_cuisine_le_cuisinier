@@ -1,0 +1,288 @@
+/* Charte : ../charte_graphique.md */
+:root{
+  --papier:#F2EFE6;--carte:#FFFDF7;--encre:#0D1617;--orange:#E4632E;--teal:#127676;--teal-sombre:#0B4E4E;--jaune:#E3A535;
+  --titre:'Anton',Impact,sans-serif;--corps:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+  --duree:1000ms;--col:min(40vw,540px);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--papier);color:var(--encre);font:19px/1.6 var(--corps)}
+a{color:var(--teal-sombre)}
+
+/* Scène collante, pleine largeur */
+.scrolly{position:relative}
+.scene{position:sticky;top:0;height:100vh;width:100%;overflow:hidden}
+.scene>svg,.scene>canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#svg{transition:opacity .4s}
+/* Le restaurant sort d'abord (1,2 s), le décor s'efface ensuite */
+body.sans-scene #svg{opacity:0;transition:opacity .5s 1s}
+body.large #svg{opacity:0;transition:opacity .4s}
+#foule{opacity:0;transition:opacity .6s;pointer-events:none}
+body[data-grand=foule] #foule{opacity:1}
+
+/* Les pas */
+.pas{position:relative;margin-top:-100vh;z-index:2;padding-bottom:50vh}
+.etape{min-height:92vh;display:flex;align-items:center}
+.etape.restaurant{width:var(--col);padding:0 28px}
+.etape.colonne{max-width:720px;margin:0 auto;padding:0 24px;justify-content:center;text-align:center}
+/* Image large : l'animation d'abord, puis la carte ; la carte s'efface avant le retour au restaurant */
+.etape.large{min-height:150vh}
+.etape.large .carte{position:fixed;top:4vh;left:50%;width:min(760px,calc(100vw - 48px));max-width:none;transform:translate(-50%,-12px);opacity:0;pointer-events:none;transition:opacity .4s,transform .4s;z-index:3}
+.etape.large.montre .carte{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.etape.colonne.illustre{min-height:100vh}
+.citation .carte p:not(.surtitre):not(.sources){font-size:28px;line-height:1.35;font-weight:600}
+
+.carte{background:var(--carte);border:2px solid var(--teal);border-radius:22px 4px 22px 4px;box-shadow:6px 6px 0 rgba(18,118,118,.35);padding:22px 26px;max-width:460px}
+.colonne .carte{background:none;border:0;box-shadow:none;max-width:none}
+.carte p{margin:0 0 .7em}
+.carte p:last-child{margin-bottom:0}
+.surtitre{font-family:var(--titre);text-transform:uppercase;letter-spacing:.1em;color:var(--orange);font-size:15px;margin:0 0 8px!important}
+.sources{font-size:14px;line-height:1.45;opacity:.85;border-top:1px solid rgba(18,118,118,.35);padding-top:8px;margin-top:12px!important}
+mark{color:inherit;background:rgba(228,99,46,.28);box-shadow:inset 0 -3px 0 var(--orange);padding:0 .15em;border-radius:2px}
+code{font:.88em var(--mono);background:rgba(18,118,118,.1);padding:0 .25em;border-radius:3px}
+kbd{display:inline-block;font:600 .95em var(--mono);min-width:1.9em;text-align:center;padding:.05em .4em;border:2px solid var(--encre);border-bottom-width:5px;border-radius:6px;background:var(--carte)}
+.actif kbd{animation:touche 1.6s ease-in-out .3s 1 both}
+.actif kbd+kbd{animation-delay:1.1s}
+@keyframes touche{0%,40%,100%{transform:none;border-bottom-width:5px}20%{transform:translateY(3px);border-bottom-width:2px}}
+.mention{font-family:var(--titre);text-transform:uppercase;letter-spacing:.12em;font-size:28px}
+.fleche-bas{display:block;margin:22px auto 0;width:56px;height:80px}
+.actif .fleche-bas{animation:clignote 1.4s ease-in-out infinite}
+@keyframes clignote{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* Décor SVG */
+.ciel{fill:url(#motifFond)}
+.batiment{transition:transform 1.2s cubic-bezier(.3,0,.2,1);transform:translateY(1100px)}
+body[data-position=place] .batiment{transform:none}
+body[data-position=haut] .batiment{transform:translateY(-1300px)}
+.contour{fill:none;stroke:var(--encre);stroke-width:5px;stroke-linejoin:round}
+.piece{fill:#F7F2E6}
+.dalle{fill:var(--teal-sombre)}
+.toit{fill:var(--teal);stroke:var(--encre);stroke-width:5px}
+.etiquette{font:600 22px var(--corps);fill:var(--encre);letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.meuble{fill:var(--teal);stroke:var(--encre);stroke-width:5px}
+.fondpan{fill:url(#motifRetro);stroke:var(--encre);stroke-width:5px}
+.pan{transition:transform var(--duree) cubic-bezier(.6,0,.4,1),opacity var(--duree)}
+.pan.tombe{transform:translateY(420px);opacity:0}
+.porte{fill:var(--teal-sombre);stroke:var(--encre);stroke-width:5px}
+.lueur{fill:var(--jaune);opacity:.5}
+.lueur.pulse{animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+#fissure{stroke-dasharray:520;stroke-dashoffset:520;transition:stroke-dashoffset 1s ease}
+#fissure.on{stroke-dashoffset:0}
+.titre-recette{font:italic 600 17px Georgia,serif;fill:var(--encre)}
+.ligne{font:500 12.5px var(--mono);fill:var(--encre);white-space:pre;opacity:0}
+.etq{font:700 22px var(--corps);fill:var(--orange)}
+.affichage rect{fill:#0D1617;stroke:var(--jaune);stroke-width:4}
+.affichage .chiffre{font:400 64px var(--mono);fill:var(--jaune)}
+.affichage .unite{font:600 15px var(--corps);fill:#F2EFE6;letter-spacing:.08em;text-transform:uppercase}
+.lien{fill:none;stroke:var(--orange);stroke-width:5;stroke-dasharray:14 10}
+.lien-texte{font:600 22px var(--corps);fill:var(--orange)}
+.halo{fill:none;stroke:var(--orange);stroke-width:6}
+
+/* Tout ce qui apparaît et disparaît en fondu */
+.fondu{transition:opacity .6s}
+.cache{opacity:0!important;pointer-events:none}
+.attente{opacity:0!important;transition:none!important}
+
+/* Fil qui défile dans l'assiette */
+.defilant{animation:fil 6s linear infinite paused}
+#filLecteur.defile .defilant{animation-play-state:running}
+@keyframes fil{to{transform:translateY(-90px)}}
+
+/* Cloison : du sol vers le haut */
+#cloison{transform-box:fill-box;transform-origin:50% 100%;transition:transform .9s cubic-bezier(.4,0,.2,1),opacity .6s;transform:scaleY(0)}
+#cloison.basse{transform:scaleY(.4)}
+#cloison.haute{transform:scaleY(1)}
+
+/* Flammes */
+#flammes{transform-box:fill-box;transform-origin:50% 100%}
+#flammes.on{animation:flamme .5s ease-in-out infinite alternate}
+@keyframes flamme{from{transform:scaleY(.85)}to{transform:scaleY(1.1)}}
+
+/* Carnet : lignes écrites une à une */
+#code .ligne{transition:opacity .25s}
+.code1 .l1,.code1 .l2,.code1 .l3a,.code2 .l1,.code2 .l2,.code2 .l3b,.code2 .l4,.code2 .l5{opacity:1}
+#carnet.code1 .l1{transition-delay:.2s}#carnet.code1 .l2{transition-delay:.7s}#carnet.code1 .l3a{transition-delay:1.2s}
+#carnet.code2 .l4{transition-delay:.3s}#carnet.code2 .l5{transition-delay:.8s}
+.faute{opacity:0}
+.code1 .faute{opacity:1;animation:alerte .5s 1.8s 2}
+@keyframes alerte{50%{opacity:0}}
+#lignesSi text{font:500 6px var(--mono);fill:var(--encre);opacity:0;transition:opacity .15s}
+.deborde #lignesSi text{opacity:1}
+.deborde #carnetOuvert{animation:enfle 1.6s ease-in forwards;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes enfle{0%{transform:none}60%{transform:scale(1.08) rotate(-1deg)}80%{transform:scale(1.16) rotate(1.5deg)}100%{transform:scale(1.22);opacity:0}}
+#pages .page{transition:none;opacity:0}
+#pages.vole .page{opacity:1;transform:translate(var(--tx),var(--ty)) rotate(var(--r));transition:transform 1.1s cubic-bezier(.2,.7,.3,1) 1.5s,opacity .1s 1.5s}
+#pages.pose .page{opacity:1;transform:translate(var(--tx),var(--ty)) rotate(var(--r))}
+
+/* Icônes des données, du plat au passe-plat */
+.icone{opacity:0;transform:translate(280px,690px)}
+#icones.vole .icone{animation:donnee 2.2s cubic-bezier(.4,0,.3,1) both}
+#icones.vole .i2{animation-delay:1s}#icones.vole .i3{animation-delay:2s}
+@keyframes donnee{0%{opacity:0;transform:translate(280px,690px) scale(.4)}20%{opacity:1;transform:translate(280px,640px) scale(1)}80%{opacity:1;transform:translate(820px,650px) scale(.8)}100%{opacity:0;transform:translate(840px,660px) scale(.4)}}
+
+/* Assiettes qui arrivent du passe-plat */
+.assiette-en-plus{opacity:0;transform:translate(560px,-30px);transition:transform 1s cubic-bezier(.4,0,.2,1),opacity .3s}
+.trois .assiette-en-plus{opacity:1;transform:none}
+.trois #lasagnes3{transition-delay:.9s}
+
+/* Cuisinier au passe-plat */
+#cuisinier{transition:transform var(--duree) cubic-bezier(.4,0,.2,1),opacity .6s}
+#cuisinier.passe{transform:translateX(-200px)}
+
+#dessert{transition:transform var(--duree) cubic-bezier(.5,0,.3,1),opacity .4s}
+#dessert.sert{transform:translate(-505px,20px)}
+
+/* ---------- Séquence 6 : la porte, l'enveloppe, le gris ---------- */
+#battant{transform-box:fill-box;transform-origin:0 50%;transition:transform 1s cubic-bezier(.4,0,.2,1)}
+#battant.entrouverte{transform:scaleX(.8)}
+#gris{mix-blend-mode:saturation;opacity:0;transition:opacity 1s;pointer-events:none}
+svg.gris #gris{opacity:1}
+#lueurHaut{visibility:hidden}
+svg.gris #lueurHaut{visibility:visible}
+#enveloppe{opacity:0;transform:translate(1160px,490px) scale(.5)}
+#enveloppe.joue{animation:enveloppe 2.2s cubic-bezier(.4,0,.3,1) both}
+#enveloppe.pose{opacity:1;transform:translate(905px,690px)}
+@keyframes enveloppe{0%{opacity:0;transform:translate(1160px,490px) scale(.5)}12%{opacity:1;transform:translate(1160px,516px) scale(1)}45%{transform:translate(1080px,590px) rotate(-18deg)}75%{transform:translate(970px,650px) rotate(12deg)}100%{opacity:1;transform:translate(905px,690px)}}
+
+/* ---------- Séquences 9 et 10 : le comptoir ---------- */
+#convive1{transition:transform 1s cubic-bezier(.4,0,.2,1)}
+svg.comptoir #convive1{transform:translateX(360px)}
+#tableLecteur,#assLecteur{transition:opacity .6s}
+svg.comptoir :is(#tableLecteur,#assLecteur,#lasagnes2,#lasagnes3,#voisin){opacity:0!important}
+.bulle-texte{font:600 19px var(--corps);fill:var(--encre)}
+#bulle{opacity:0}
+#bulle.joue{opacity:1;animation:bulleVa .9s cubic-bezier(.4,0,.2,1) 1.6s both}
+#bulle.pose{opacity:1;transform:translateX(110px)}
+@keyframes bulleVa{to{transform:translateX(110px)}}
+#plat.tard{transition:opacity .5s 2.4s}
+.encart-texte{font:700 11px var(--corps);fill:var(--teal-sombre);text-transform:uppercase;letter-spacing:.06em}
+#encart{transition:opacity .6s .9s,transform .6s .9s}
+#encart.cache{transform:translateY(-24px)}
+.interrupteur-texte{font:700 16px var(--corps);fill:var(--encre);letter-spacing:.04em}
+#copie{opacity:0;transform:translate(650px,556px)}
+#copie.joue{animation:copie 2s cubic-bezier(.4,0,.3,1) both}
+#copie.pose{opacity:1;transform:translate(1250px,650px);transition:transform 1s cubic-bezier(.4,0,.2,1)}
+#copie.pose.range{transform:translate(1322px,721px) scale(.8)}
+@keyframes copie{0%{opacity:0;transform:translate(650px,556px)}15%{opacity:1;transform:translate(660px,600px)}50%{transform:translate(800px,680px)}100%{opacity:1;transform:translate(1250px,650px)}}
+
+/* ---------- Séquence 13 : le halo qui glisse, la carte à emporter ---------- */
+#haloMobile{fill:none;stroke:var(--orange);stroke-width:6;vector-effect:non-scaling-stroke;transform:translate(1086px,748px) scale(172);transition:transform 1.2s cubic-bezier(.4,0,.2,1),opacity .6s}
+#haloMobile.patron{transform:translate(1150px,352px) scale(300,158)}
+#menu{transform-box:fill-box;transform-origin:center;transition:opacity .6s,transform .8s cubic-bezier(.3,1.3,.5,1)}
+#menu.cache{transform:translateY(-40px) rotate(-3deg)}
+.menu-titre{font:400 40px var(--titre);fill:var(--orange);letter-spacing:.06em;text-transform:uppercase}
+.menu-orn{font:28px Georgia,serif;fill:var(--teal)}
+.menu-q{font:600 24px var(--corps);fill:var(--encre)}
+
+/* ---------- Image large : l'eau, la rue, les façades ---------- */
+#grand{position:absolute;left:0;right:0;bottom:0;top:var(--bande,30vh);opacity:0;transition:opacity .6s;pointer-events:none;overflow:hidden}
+body.large:not([data-grand=foule]) #grand{opacity:1}
+#rue{position:absolute;inset:0;width:100%;height:100%;transition:opacity .3s}
+body[data-grand=eau] #rue{opacity:0}
+#eau{position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(rgba(18,118,118,.78),rgba(11,78,78,.94));transition:height 3s linear}
+#centre{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .4s}
+body[data-grand=eau] #centre{opacity:1}
+.centre-texte{font:400 34px var(--titre);fill:var(--encre);letter-spacing:.08em;text-transform:uppercase}
+body[data-grand=eau] #eau{height:calc(100% - 30px)}
+body[data-grand=bistrot] #eau{transition:height 1.4s cubic-bezier(.5,0,.7,.4)}
+#eau .vague{position:absolute;left:0;top:-15px;width:200%;height:16px;fill:rgba(18,118,118,.78);animation:vague 3s linear infinite}
+#eau::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 46px,rgba(242,239,230,.12) 46px 49px)}
+@keyframes vague{to{transform:translateX(-50%)}}
+#graduation{position:absolute;right:28px;top:0;bottom:0;width:4px;background:var(--encre);opacity:0;transition:opacity .4s}
+#graduation::before{content:'';position:absolute;right:0;top:0;bottom:0;width:16px;background:repeating-linear-gradient(to bottom,var(--encre) 0 3px,transparent 3px 10%)}
+body[data-grand=eau] #graduation{opacity:1}
+.g-haut,.g-bas{position:absolute;right:26px;white-space:nowrap;font:600 18px var(--corps);perspective:500px}
+.g-haut{top:16px}.g-bas{bottom:4px}
+.g-haut>span,.g-bas{display:block;background:var(--carte);border:2px solid var(--encre);padding:3px 10px;border-radius:6px}
+.g-wallons{position:absolute;right:0;top:0;transform:rotateX(90deg)}
+body[data-grand=eau] .g-litres{animation:bascule1 .5s 3.6s ease-in both}
+body[data-grand=eau] .g-wallons{animation:bascule2 .5s 4.1s ease-out both}
+@keyframes bascule1{to{transform:rotateX(90deg)}}
+@keyframes bascule2{from{transform:rotateX(-90deg)}to{transform:none}}
+#rueCam{transform-origin:0 0;transition:transform 1.2s cubic-bezier(.4,0,.2,1)}
+#rueCam.bistrot{transform:translate(-2480px,-700px) scale(2)}
+#rideau{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0);transition:transform 1.2s ease-in 1.4s}
+#rideau.baisse{transform:none}
+.bistrot-texte{font:400 30px var(--titre);fill:var(--encre);letter-spacing:.08em;text-transform:uppercase}
+.cable{fill:none;stroke:#9C978C;transition:stroke .8s}
+.cable.gros{stroke-width:16}.cable.mince{stroke-width:3}
+.facade :is(.f-mur,.f-toit,.f-vitre,.f-porte,.f-enseigne,.f-store){fill:#CFC9BC;stroke:var(--encre);stroke-width:5;transition:fill .8s}
+.facade .f-vitre{fill:#B5AFA3}
+.facade .f-etoiles path{fill:#A9A397;stroke:var(--encre);stroke-width:2;transition:fill .8s}
+.facade .f-detail{opacity:.3;transition:opacity .8s}
+.facade .f-neon rect{fill:#5A5A55;stroke:var(--encre);stroke-width:4;transition:fill .4s}
+.facade .f-neon path{fill:none;stroke:#8C887F;stroke-width:6;stroke-linecap:round;transition:stroke .4s}
+.facade.on .cable{stroke:var(--encre)}
+.facade.on .f-mur{fill:#F7F2E6}
+.facade.on .f-porte{fill:var(--teal-sombre)}
+#facEtoile.on :is(.f-toit,.f-enseigne){fill:var(--teal)}
+#facEtoile.on .f-vitre{fill:var(--jaune)}
+#facEtoile.on .f-etoiles path{fill:var(--jaune)}
+#facEchoppe.on .f-store{fill:var(--teal)}
+#facEchoppe.on .f-vitre{fill:var(--carte)}
+#facEchoppe.on .f-detail{opacity:1}
+#facFast.on .f-mur{fill:#F2D9C4}
+#facFast.on .f-vitre{fill:var(--jaune)}
+#facFast.on .f-neon rect{fill:var(--encre)}
+#facFast.on .f-neon path{stroke:var(--orange)}
+#facFast.clignote .f-neon{animation:neon 1.1s steps(1) both}
+@keyframes neon{0%,30%,55%{opacity:1}15%,45%{opacity:.15}}
+#facNous{opacity:.5;transition:opacity 1s .9s}
+
+/* ---------- Colonne : illustrations des séquences 7 et 11 ---------- */
+.illus{display:block;width:100%;height:min(40vh,340px);margin:0 auto 14px;overflow:visible}
+.illus .tiroir{transform:translateY(-46px);transition:transform .8s cubic-bezier(.3,1.4,.5,1) .3s}
+.vu .illus .tiroir,.caisse-ouverte .tiroir{transform:none}
+.t-entete{font:700 11.5px var(--mono);fill:var(--encre);letter-spacing:.06em}
+.t-ligne{font:500 17px var(--mono);fill:var(--encre)}
+.t-lien{fill:var(--teal-sombre);text-decoration:underline}
+.t-tirets{stroke:var(--encre);stroke-width:1.5;stroke-dasharray:4 4}
+.t-legende{font:600 16px var(--corps);fill:var(--encre)}
+.t-centre{text-anchor:middle}
+.t-ecran{font:400 30px var(--mono);fill:var(--jaune)}
+:is(.l-1,.l-2,.l-3,.l-4){opacity:0;transition:opacity .3s}
+.vu .l-1{opacity:1;transition-delay:.4s}.vu .l-2{opacity:1;transition-delay:1s}.vu .l-3{opacity:1;transition-delay:1.6s}.vu .l-4{opacity:1;transition-delay:3.8s}
+.ticket-imprime{opacity:0;transform:translateY(-14px);transition:opacity .4s,transform .6s}
+.vu .ticket-imprime{opacity:1;transform:none}
+.piece{fill:#D8D2C4;stroke:var(--encre);stroke-width:1.5;transition:fill .3s}
+.vu .piece.on{fill:var(--orange);transition-delay:calc(var(--d) + 1.2s)}
+.annonceur{opacity:0;transform:translateX(60px);transition:opacity .6s .2s,transform .9s cubic-bezier(.3,0,.2,1) .2s}
+.vu .annonceur{opacity:1;transform:none}
+.liasse{opacity:0;transform:translateY(-30px);transition:opacity .3s 1.2s,transform .5s 1.2s}
+.vu .liasse{opacity:1;transform:none}
+.c-rond{fill:var(--carte);stroke:var(--teal);stroke-width:3}
+.c-fleche{fill:none;stroke:var(--orange);stroke-width:4}
+.chaine>*{opacity:0;transition:opacity .4s}
+.vu .chaine .c1{opacity:1;transition-delay:1.9s}.vu .chaine .f1{opacity:1;transition-delay:2.3s}.vu .chaine .c2{opacity:1;transition-delay:2.6s}
+.vu .chaine .f2{opacity:1;transition-delay:3s}.vu .chaine .c3{opacity:1;transition-delay:3.3s}
+.recto,.verso{transform-box:fill-box;transform-origin:center}
+.verso{transform:scaleX(0)}
+.vu .recto{animation:flipA .45s .5s ease-in both}
+.vu .verso{animation:flipB .45s .95s ease-out both}
+@keyframes flipA{to{transform:scaleX(0)}}
+@keyframes flipB{from{transform:scaleX(0)}to{transform:none}}
+.voyant{fill:#3A4A4A}
+.vu .voyant{animation:allume .2s var(--d) both,cligne var(--b) calc(var(--d) + .8s) infinite}
+@keyframes allume{to{fill:var(--jaune)}}
+@keyframes cligne{50%{fill:var(--orange)}}
+.barre{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);transition:transform .9s cubic-bezier(.3,0,.2,1)}
+.vu .b1{transform:none;transition-delay:.9s}.vu .b2{transform:none;transition-delay:1.9s}
+:is(.b1-t,.b2-t,.japon,.japon-t){opacity:0;transition:opacity .5s}
+.vu .b1-t{opacity:1;transition-delay:1.8s}.vu .b2-t{opacity:1;transition-delay:2.8s}
+.vu .japon,.vu .japon-t{opacity:1;transition-delay:3.2s}
+
+/* ---------- Pied de page (retrofuturisme_site) ---------- */
+.retro-footer{background:var(--encre);border-top:3px solid var(--teal);padding:3rem 2.5rem;color:var(--papier);text-align:center;position:relative;z-index:3}
+.retro-footer p{margin:0}
+.retro-footer-ornament{color:var(--teal);font-size:1.5rem;margin-bottom:2rem!important}
+.retro-footer-credit{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem!important}
+.retro-footer-licence{font-size:.875rem;color:rgba(242,239,230,.6)}
+.retro-footer-link{color:var(--jaune);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.retro-footer-link:hover{border-bottom-color:var(--jaune)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .code1 .faute{opacity:1}
+}
+body:not([data-grand=eau]) #eau .vague{opacity:0;transition:opacity .3s 1.3s}

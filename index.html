@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pour qui cuisine le cuisinier ?</title>
+<meta name="description" content="Ce qu'est un algorithme, et pour qui il travaille : un explainer à défilement, d'après la métaphore de Damien Van Achter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500&family=Inter:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="scrolly">
+  <div class="scene" id="scene" aria-hidden="true">
+    <svg id="svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <pattern id="motifRetro" width="80" height="80" patternUnits="userSpaceOnUse">
+          <rect width="80" height="80" fill="#E9E1CF"/>
+          <path d="M40 8c14 10 14 26 0 32c-14-6-14-22 0-32zM40 40c10 8 22 8 32 0M40 40c-10 8-22 8-32 0" fill="none" stroke="#127676" stroke-width="3"/>
+          <circle cx="40" cy="58" r="4" fill="#E4632E"/>
+        </pattern>
+        <pattern id="motifFond" width="220" height="220" patternUnits="userSpaceOnUse">
+          <rect width="220" height="220" fill="#F2EFE6"/>
+          <g fill="none" stroke="#127676" stroke-width="2.5" opacity=".2">
+            <path d="M110 20c40 30 40 80 0 100c-40-20-40-70 0-100z"/>
+            <path d="M110 120c30 20 70 20 100 0M110 120c-30 20-70 20-100 0"/>
+            <path d="M0 200c40-30 70-30 110 0s70 30 110 0"/>
+          </g>
+          <circle cx="110" cy="160" r="5" fill="#E4632E" opacity=".25"/>
+        </pattern>
+        <clipPath id="clipFilL"><rect x="232" y="612" width="96" height="96" rx="6"/></clipPath>
+        <clipPath id="clipFilV"><rect x="557" y="612" width="96" height="96" rx="6"/></clipPath>
+        <clipPath id="clipVisage"><circle cx="0" cy="0" r="15"/></clipPath>
+        <marker id="fleche" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#E4632E"/></marker>
+      </defs>
+
+      <rect class="ciel" x="-4000" y="-4000" width="10000" height="10000"/>
+
+      <g id="batiment" class="batiment">
+        <!-- Structure -->
+        <polygon class="toit" points="60,145 800,40 1540,145"/>
+        <g id="enseigne"><rect x="700" y="70" width="200" height="46" rx="6" class="meuble"/><path d="M720 93h160" stroke="#E3A535" stroke-width="3"/></g>
+        <rect class="piece" x="80" y="145" width="720" height="355"/>
+        <rect class="piece" x="800" y="145" width="720" height="355"/>
+        <rect class="piece" x="80" y="516" width="720" height="384"/>
+        <rect class="piece" x="800" y="516" width="720" height="384"/>
+        <rect class="dalle" x="80" y="500" width="1440" height="16"/>
+        <rect class="dalle" x="40" y="900" width="1520" height="18"/>
+        <rect class="contour" x="80" y="145" width="1440" height="755"/>
+        <path class="contour" d="M800 145V500M800 516V640M800 720V900"/>
+        <text class="etiquette" x="110" y="556">Salle</text>
+        <text class="etiquette" x="830" y="556">Cuisine</text>
+        <text class="etiquette" x="830" y="185">Bureau du patron</text>
+
+        <!-- Salle : table du lecteur -->
+        <image id="convive1" href="images/convive_1_ciseaux.png" x="96" y="612" width="106" height="282"/>
+        <g id="tableLecteur"><rect class="meuble" x="170" y="770" width="240" height="20"/><path class="contour" d="M195 790V900M385 790V900"/></g>
+        <image id="lasagnes2" class="assiette-en-plus" href="images/assiette_lasagnes_ciseaux.png" x="260" y="704" width="92" height="70"/>
+        <image id="lasagnes3" class="assiette-en-plus" href="images/assiette_lasagnes_ciseaux.png" x="300" y="694" width="92" height="70"/>
+        <image id="assLecteur" href="images/assiette_lasagnes_ciseaux.png" x="234" y="712" width="92" height="70"/>
+        <g id="filLecteur" clip-path="url(#clipFilL)">
+          <g class="defilant">
+            <rect x="240" y="618" width="80" height="24" rx="4" fill="#E4632E"/><rect x="240" y="648" width="80" height="24" rx="4" fill="#127676"/>
+            <rect x="240" y="678" width="80" height="24" rx="4" fill="#E3A535"/><rect x="240" y="708" width="80" height="24" rx="4" fill="#E4632E"/>
+            <rect x="240" y="738" width="80" height="24" rx="4" fill="#127676"/><rect x="240" y="768" width="80" height="24" rx="4" fill="#E3A535"/>
+          </g>
+        </g>
+        <!-- Salle : table du voisin -->
+        <g id="cloison"><rect x="430" y="660" width="16" height="240" fill="#0B4E4E" stroke="#0D1617" stroke-width="3"/></g>
+        <g id="voisin">
+          <image id="convive2" href="images/convive_2_ciseaux.png" x="672" y="606" width="130" height="288"/>
+          <g id="tableVoisin"><rect class="meuble" x="480" y="770" width="230" height="20"/><path class="contour" d="M505 790V900M685 790V900"/></g>
+          <image id="assVoisin" href="images/assiette_sushis_ciseaux.png" x="560" y="714" width="90" height="70"/>
+          <g id="filVoisin">
+            <circle cx="575" cy="632" r="11" fill="#0D1617"/><rect x="592" y="622" width="56" height="20" rx="10" fill="#E3A535"/>
+            <circle cx="575" cy="662" r="11" fill="#E3A535"/><rect x="592" y="652" width="56" height="20" rx="10" fill="#0D1617"/>
+            <circle cx="575" cy="692" r="11" fill="#127676"/><rect x="592" y="682" width="56" height="20" rx="10" fill="#E3A535"/>
+          </g>
+        </g>
+
+        <!-- Cuisine -->
+        <g id="fourneaux">
+          <rect x="840" y="770" width="170" height="130" fill="#0D1617"/>
+          <circle cx="885" cy="835" r="14" fill="#E3A535"/><circle cx="965" cy="835" r="14" fill="#E3A535"/>
+          <path d="M858 770v-34h54v34M930 770v-26h60v26" fill="#127676" stroke="#0D1617" stroke-width="4"/>
+          <g id="flammes"><path d="M875 770c-8-14 4-20 10-30c6 10 18 16 10 30z M955 770c-8-14 4-20 10-30c6 10 18 16 10 30z" fill="#E4632E"/></g>
+        </g>
+        <g id="planTravail"><rect class="meuble" x="1130" y="770" width="370" height="130"/></g>
+
+        <g id="carnet">
+          <g id="carnetOuvert">
+            <rect x="1146" y="636" width="328" height="138" rx="6" fill="#127676" stroke="#0D1617" stroke-width="4"/>
+            <rect x="1156" y="644" width="152" height="122" fill="#FFFDF7" stroke="#0D1617" stroke-width="2"/>
+            <rect x="1312" y="644" width="152" height="122" fill="#FFFDF7" stroke="#0D1617" stroke-width="2"/>
+            <text x="1232" y="674" text-anchor="middle" class="titre-recette">Lasagnes</text>
+            <path d="M1200 712a32 18 0 0 0 64 0z" fill="#127676" stroke="#0D1617" stroke-width="2.5"/>
+            <path d="M1238 712l16 -20" stroke="#0D1617" stroke-width="3"/>
+            <g class="code" id="code">
+              <text class="ligne l1" x="1320" y="666">prendre(farine)</text>
+              <text class="ligne l2" x="1320" y="686">mélanger(œufs)</text>
+              <text class="ligne l3a" x="1320" y="706">cuire(20 min</text>
+              <rect class="faute" x="1411" y="709" width="8" height="3" fill="#E4632E"/>
+              <text class="ligne l3b" x="1320" y="706">cuire(20 min)</text>
+              <text class="ligne l4" x="1320" y="730">si végétarien :</text>
+              <text class="ligne l5" x="1320" y="750">  retirer(viande)</text>
+            </g>
+            <g id="lignesSi"></g>
+          </g>
+          <g id="carnetFerme">
+            <rect x="1250" y="742" width="150" height="28" rx="4" fill="#127676" stroke="#0D1617" stroke-width="4"/>
+            <path d="M1262 756h126" stroke="#E3A535" stroke-width="3"/>
+          </g>
+        </g>
+        <g id="pages"></g>
+
+        <image id="cuisinier" href="images/cuisinier_ciseaux.png" x="1030" y="598" width="113" height="300"/>
+        <g id="nuage"></g>
+        <text id="etqEcrit" class="etq" x="1310" y="626" text-anchor="middle">écrit</text>
+        <text id="etqAppris" class="etq" x="1188" y="548">appris</text>
+        <g id="accolade">
+          <path d="M1025 925q0 18 18 18h170q20 0 30 22q10-22 30-22h170q18 0 18-18" fill="none" stroke="#E4632E" stroke-width="5"/>
+          <text class="etq" x="1243" y="995" text-anchor="middle">l'algorithme d'Instagram</text>
+        </g>
+
+        <!-- Données vues par le cuisinier -->
+        <g id="icones">
+          <g class="icone i1"><circle r="20" fill="#FFFDF7" stroke="#E4632E" stroke-width="3"/><path d="M0 9l-11-11a6 6 0 0 1 11-6a6 6 0 0 1 11 6z" fill="#E4632E"/></g>
+          <g class="icone i2"><circle r="20" fill="#FFFDF7" stroke="#127676" stroke-width="3"/><path d="M-6 -9l15 9l-15 9z" fill="#127676"/></g>
+          <g class="icone i3"><circle r="20" fill="#FFFDF7" stroke="#0D1617" stroke-width="3"/><path d="M-8 -11h16M-8 11h16M-6 -11c0 7 12 7 12 0M-6 11c0-7 12-7 12 0" fill="none" stroke="#0D1617" stroke-width="2.5" stroke-linecap="round"/><path d="M-3 9h6l-3-4z" fill="#E3A535"/></g>
+        </g>
+
+        <!-- Étage : bureau du patron -->
+        <rect class="meuble" x="1150" y="440" width="330" height="60"/>
+        <image id="patron" href="images/patron_ciseaux.png" x="900" y="195" width="108" height="300"/>
+        <image id="compteur" href="images/compteur_ciseaux.png" x="1250" y="300" width="132" height="140"/>
+        <g id="affichage" class="affichage">
+          <rect x="1130" y="190" width="370" height="100" rx="8"/>
+          <text class="chiffre" id="chiffre" x="1150" y="262">000</text>
+          <text class="unite" x="1300" y="232">minutes</text>
+          <text class="unite" x="1300" y="256">passées à table</text>
+        </g>
+        <g id="lien">
+          <path class="lien" d="M1240 300C1150 420 1120 520 1090 590" marker-end="url(#fleche)"/>
+          <text class="lien-texte" x="1122" y="400">consigne</text>
+        </g>
+        <g id="dessert">
+          <ellipse cx="860" cy="712" rx="52" ry="12" fill="#ECE5D3" stroke="#0D1617" stroke-width="3"/>
+          <path d="M818 708a42 40 0 0 1 84 0z" fill="#E3A535" stroke="#0D1617" stroke-width="3"/>
+          <path d="M852 672l20 14l-20 14z" fill="#0D1617"/>
+          <circle cx="860" cy="662" r="6" fill="#0D1617"/>
+        </g>
+        <!-- Séquences 9 et 10 : le comptoir, l'apprenti, l'interrupteur -->
+        <g id="comptoir">
+          <rect class="meuble" x="560" y="730" width="240" height="170"/>
+          <rect x="545" y="716" width="255" height="16" fill="#0B4E4E" stroke="#0D1617" stroke-width="4"/>
+        </g>
+        <g id="plat">
+          <ellipse cx="730" cy="712" rx="50" ry="10" fill="#ECE5D3" stroke="#0D1617" stroke-width="3"/>
+          <circle cx="712" cy="704" r="9" fill="#127676"/><circle cx="732" cy="700" r="10" fill="#E3A535"/><circle cx="750" cy="705" r="8" fill="#E4632E"/>
+        </g>
+        <g id="encart">
+          <rect x="694" y="684" width="76" height="20" rx="4" fill="#F7E3B5" stroke="#127676" stroke-width="2"/>
+          <text class="encart-texte" x="732" y="698" text-anchor="middle">publicité</text>
+        </g>
+        <g id="interrupteur">
+          <rect x="356" y="600" width="30" height="46" rx="5" fill="#FFFDF7" stroke="#0D1617" stroke-width="3"/>
+          <rect x="366" y="607" width="10" height="17" rx="3" fill="#E3A535" stroke="#0D1617" stroke-width="2"/>
+          <text class="interrupteur-texte" x="346" y="630" text-anchor="end">entraînement</text>
+        </g>
+        <g id="pile">
+          <rect x="1292" y="752" width="64" height="12" rx="5" fill="#F7E3B5" stroke="#0D1617" stroke-width="2"/>
+          <rect x="1298" y="742" width="64" height="12" rx="5" fill="#F7E3B5" stroke="#0D1617" stroke-width="2"/>
+          <rect x="1290" y="732" width="64" height="12" rx="5" fill="#F7E3B5" stroke="#0D1617" stroke-width="2"/>
+        </g>
+        <image id="apprenti" href="images/apprenti_lit_ciseaux.png" x="1400" y="604" width="95" height="295"/>
+        <g id="bulle">
+          <path d="M400 530h260a24 24 0 0 1 24 24v8a24 24 0 0 1-24 24h-140l-18 18l-2-18h-100a24 24 0 0 1-24-24v-8a24 24 0 0 1 24-24z" fill="#F7E3B5" stroke="#0D1617" stroke-width="3"/>
+          <text id="bulleTexte" class="bulle-texte" x="400" y="566"></text>
+        </g>
+        <g id="copie">
+          <rect x="-40" y="-14" width="80" height="28" rx="12" fill="#F7E3B5" stroke="#0D1617" stroke-width="2.5"/>
+          <path d="M-26 -3h52M-26 5h34" stroke="#0D1617" stroke-width="2"/>
+        </g>
+
+        <circle class="halo" id="haloPatron" cx="955" cy="345" r="165"/>
+        <circle class="halo" id="haloCuisinier" cx="1086" cy="748" r="172"/>
+        <circle class="halo" id="haloConvive" cx="150" cy="752" r="150"/>
+
+        <!-- Pans du mur, au premier plan -->
+        <g class="pan" id="panHaut"><rect class="fondpan" x="80" y="145" width="720" height="355"/></g>
+        <g class="pan" id="panCuisine">
+          <rect class="fondpan" x="800" y="516" width="720" height="384"/>
+          <path id="fissure" d="M1180 520l-14 60l22 40l-26 70l18 50l-20 80l12 76" fill="none" stroke="#0D1617" stroke-width="4" stroke-linejoin="round"/>
+        </g>
+        <g class="pan" id="panBureau">
+          <rect class="fondpan" x="800" y="145" width="720" height="355"/>
+          <rect id="fente" x="1094" y="252" width="134" height="246" fill="#E3A535"/>
+          <g id="battant">
+            <rect id="porte" class="porte" x="1090" y="250" width="140" height="250"/>
+            <circle cx="1205" cy="380" r="7" fill="#E3A535"/>
+          </g>
+          <rect id="lueur" class="lueur" x="1094" y="494" width="132" height="6"/>
+          <g id="ombre"><ellipse cx="1142" cy="497" rx="13" ry="3.5" fill="#0D1617"/><ellipse cx="1178" cy="497" rx="13" ry="3.5" fill="#0D1617"/></g>
+          <text class="etiquette" x="1160" y="230" text-anchor="middle" style="opacity:1">Privé</text>
+        </g>
+
+        <g id="enveloppe">
+          <rect x="-24" y="-15" width="48" height="30" rx="2" fill="#FFFDF7" stroke="#0D1617" stroke-width="3"/>
+          <path d="M-24 -15L0 4L24 -15" fill="none" stroke="#0D1617" stroke-width="2.5"/>
+          <circle cy="2" r="5" fill="#E4632E"/>
+        </g>
+
+        <!-- Séquence 6 : tout se grise, sauf la lueur sous la porte -->
+        <rect id="gris" x="-4000" y="-4000" width="10000" height="10000" fill="#8A8A8A"/>
+        <g id="lueurHaut"><polygon points="1094,500 1226,500 1262,516 1058,516" fill="#E3A535" opacity=".55"/><rect x="1094" y="493" width="132" height="8" fill="#E3A535"/></g>
+        <!-- Séquence 13 : le halo qui passe du cuisinier au patron, la carte à emporter -->
+        <ellipse id="haloMobile" rx="1" ry="1"/>
+        <g id="menu">
+          <rect x="430" y="240" width="740" height="540" rx="10" fill="#FFFDF7" stroke="#127676" stroke-width="5"/>
+          <rect x="446" y="256" width="708" height="508" rx="6" fill="none" stroke="#127676" stroke-width="1.5"/>
+          <text class="menu-titre" x="800" y="318" text-anchor="middle">La carte à emporter</text>
+          <text class="menu-orn" x="800" y="352" text-anchor="middle">❧</text>
+          <text class="menu-q" id="menuQ1" x="480" y="410"></text>
+          <text class="menu-q" id="menuQ2" x="480" y="510"></text>
+          <text class="menu-q" id="menuQ3" x="480" y="610"></text>
+        </g>
+      </g>
+    </svg>
+    <canvas id="foule"></canvas>
+
+    <!-- Image large, séquences 11 et 12 : sous la bande réservée à la carte -->
+    <div id="grand">
+      <svg id="rue" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax meet">
+        <g id="rueCam">
+          <rect x="-1000" y="620" width="3600" height="200" fill="#0B4E4E"/>
+          <path d="M-1000 620H2600" stroke="#0D1617" stroke-width="5"/>
+          <path d="M-1000 662H2600" stroke="#E3A535" stroke-width="4" stroke-dasharray="40 30"/>
+
+          <!-- L'étoilé -->
+          <g id="facEtoile" class="facade">
+            <path class="cable gros" d="M250 -60V230"/>
+            <polygon class="f-toit" points="70,250 250,170 430,250"/>
+            <rect class="f-mur" x="90" y="250" width="320" height="370"/>
+            <rect class="f-enseigne" x="140" y="270" width="220" height="56" rx="6"/>
+            <g class="f-etoiles"><path d="M190 298l6 12l13 2l-9 9l2 13l-12-6l-12 6l2-13l-9-9l13-2z"/><path d="M250 298l6 12l13 2l-9 9l2 13l-12-6l-12 6l2-13l-9-9l13-2z"/><path d="M310 298l6 12l13 2l-9 9l2 13l-12-6l-12 6l2-13l-9-9l13-2z"/></g>
+            <rect class="f-vitre" x="120" y="370" width="110" height="120" rx="50"/><rect class="f-vitre" x="270" y="370" width="110" height="120" rx="50"/>
+            <rect class="f-porte" x="215" y="520" width="70" height="100"/>
+          </g>
+          <!-- Le bio et le végé -->
+          <g id="facEchoppe" class="facade">
+            <path class="cable mince" d="M615 -60V380"/>
+            <rect class="f-mur" x="470" y="400" width="290" height="220"/>
+            <path class="f-store" d="M455 400h320l-20 50h-280z"/>
+            <rect class="f-vitre" x="495" y="470" width="150" height="110"/>
+            <g class="f-detail"><rect x="512" y="540" width="62" height="6" fill="#0D1617"/><path d="M518 540l8-32h44l-8 32z" fill="#127676" stroke="#0D1617" stroke-width="3"/><rect x="590" y="530" width="44" height="16" rx="6" fill="#E3A535" stroke="#0D1617" stroke-width="3"/><path d="M596 530q16-10 32 0" fill="#127676"/></g>
+            <rect class="f-porte" x="672" y="500" width="62" height="120"/>
+          </g>
+          <!-- La junk food -->
+          <g id="facFast" class="facade">
+            <path class="cable gros" d="M960 -60V300"/>
+            <rect class="f-mur" x="810" y="300" width="310" height="320"/>
+            <g class="f-neon"><rect x="850" y="322" width="230" height="64" rx="32"/><path d="M905 348h40M905 360h40M900 372h50M908 336q17-12 34 0"/><path d="M990 338l20 36M1010 338l-20 36"/></g>
+            <rect class="f-vitre" x="840" y="420" width="250" height="110"/>
+            <rect class="f-porte" x="930" y="530" width="70" height="90"/>
+          </g>
+          <!-- Le restaurant visité depuis le début, qui s'y superpose -->
+          <g id="facNous">
+            <polygon points="800,300 965,232 1130,300" fill="#127676" stroke="#0D1617" stroke-width="5"/>
+            <rect x="810" y="300" width="310" height="320" fill="url(#motifRetro)" stroke="#0D1617" stroke-width="5"/>
+            <rect x="915" y="250" width="100" height="30" rx="5" fill="#127676" stroke="#0D1617" stroke-width="4"/>
+            <rect x="930" y="520" width="70" height="100" fill="#0B4E4E" stroke="#0D1617" stroke-width="5"/>
+          </g>
+          <!-- Le bistrot du coin -->
+          <g id="bistrot" transform="translate(300 0)">
+            <rect x="1190" y="390" width="300" height="230" fill="#F7F2E6" stroke="#0D1617" stroke-width="5"/>
+            <path d="M1175 390h330l-20 46h-290z" fill="#E4632E" stroke="#0D1617" stroke-width="4"/>
+            <path d="M1220 390l-8 46M1260 390l-4 46M1300 390v46M1340 390v46M1380 390l4 46M1420 390l8 46M1460 390l12 46" stroke="#FFFDF7" stroke-width="10"/>
+            <text class="bistrot-texte" x="1340" y="382" text-anchor="middle">Bistrot</text>
+            <rect x="1215" y="460" width="170" height="130" fill="#E3A535" stroke="#0D1617" stroke-width="4"/>
+            <path d="M1250 590v-40h22v40M1300 590v-60h30v60" fill="#127676" stroke="#0D1617" stroke-width="3"/>
+            <rect x="1405" y="490" width="65" height="130" fill="#0B4E4E" stroke="#0D1617" stroke-width="4"/>
+            <g id="rideau"><rect x="1200" y="440" width="280" height="180" fill="#9AA3A3" stroke="#0D1617" stroke-width="4"/><path d="M1200 462h280M1200 484h280M1200 506h280M1200 528h280M1200 550h280M1200 572h280M1200 594h280" stroke="#0D1617" stroke-width="2"/></g>
+          </g>
+        </g>
+      </svg>
+      <svg id="centre" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax meet">
+        <path d="M-1000 640H2600" stroke="#0D1617" stroke-width="5"/>
+        <rect x="560" y="400" width="480" height="240" fill="#F7F2E6" stroke="#0D1617" stroke-width="6"/>
+        <rect x="545" y="384" width="510" height="20" fill="#0B4E4E" stroke="#0D1617" stroke-width="5"/>
+        <g fill="#127676" stroke="#0D1617" stroke-width="4"><rect x="600" y="440" width="70" height="200"/><rect x="700" y="440" width="70" height="200"/><rect x="800" y="440" width="70" height="200"/><rect x="900" y="440" width="70" height="200"/></g>
+        <g fill="#E3A535"><circle cx="635" cy="470" r="5"/><circle cx="735" cy="500" r="5"/><circle cx="835" cy="470" r="5"/><circle cx="935" cy="530" r="5"/><circle cx="635" cy="560" r="5"/><circle cx="835" cy="590" r="5"/></g>
+        <path d="M1040 600h120v40" fill="none" stroke="#0D1617" stroke-width="10"/>
+        <text class="centre-texte" x="800" y="372" text-anchor="middle">Saint-Ghislain</text>
+      </svg>
+      <div id="eau">
+        <svg class="vague" viewBox="0 0 400 30" preserveAspectRatio="none"><path d="M0 15q50-15 100 0t100 0t100 0t100 0V30H0z"/></svg>
+      </div>
+      <div id="graduation">
+        <span class="g-haut"><span class="g-litres">1,5 milliard de litres</span><span class="g-wallons">34 000 Wallons pendant un an</span></span>
+        <span class="g-bas">0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pas" id="pas"></div>
+</main>
+
+<footer class="retro-footer">
+  <p class="retro-footer-ornament">❧</p>
+  <p class="retro-footer-credit">
+    Made by <a href="https://www.linkedin.com/in/antonin-bareau/" target="_blank" rel="noopener noreferrer" class="retro-footer-link">Antonin Bareau</a> avec l’aide essentielle d’un ou plusieurs LLM
+  </p>
+  <p class="retro-footer-licence">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="retro-footer-link">Licence creative common : CC-by-nc-sa</a>
+  </p>
+</footer>
+
+<script src="contenu.js"></script>
+<script src="colonne.js"></script>
+<script src="scene.js"></script>
+</body>
+</html>
